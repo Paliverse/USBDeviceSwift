@@ -40,8 +40,11 @@ public struct HIDDevice: Hashable, Identifiable {
     /// The underlying HID device.
     public let device: IOHIDDevice
 
-    /// The report size.
-    public let reportSize: Int
+    /// The input report size.
+    public let maxInputReportSize: Int
+
+    /// The output report size.
+    public let maxOutputReportSize:Int
 
     /// The location ID of the device
     public let id: Int32
@@ -71,7 +74,8 @@ public struct HIDDevice: Hashable, Identifiable {
         self.name = IOHIDDeviceGetProperty(device, kIOHIDProductKey as CFString) as? String ?? ""
         self.vendorId = IOHIDDeviceGetProperty(self.device, kIOHIDVendorIDKey as CFString) as? Int16 ?? 0
         self.productId = IOHIDDeviceGetProperty(self.device, kIOHIDProductIDKey as CFString) as? Int16 ?? 0
-        self.reportSize = IOHIDDeviceGetProperty(self.device, kIOHIDMaxInputReportSizeKey as CFString) as? Int ?? 0
+        self.maxInputReportSize = IOHIDDeviceGetProperty(self.device, kIOHIDMaxInputReportSizeKey as CFString) as? Int ?? 0
+        self.maxOutputReportSize = IOHIDDeviceGetProperty(self.device, kIOHIDMaxOutputReportSizeKey as CFString) as? Int ?? 0
 
         self.manufacturer = IOHIDDeviceGetProperty(self.device, kIOHIDManufacturerKey as CFString) as? String ?? ""
         self.serialNumber = IOHIDDeviceGetProperty(self.device, kIOHIDSerialNumberKey as CFString) as? String ?? ""
